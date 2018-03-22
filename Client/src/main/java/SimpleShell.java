@@ -1,3 +1,6 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +12,14 @@ public class SimpleShell {
 
     public static void prettyPrint(String output) {
         // yep, make an effort to format things nicely, eh?
-        System.out.println(output);
+        ObjectMapper mapper = new ObjectMapper();
+        Object json;
+        try {
+            json = mapper.readValue(output, Object.class);
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public static void main(String[] args) throws java.io.IOException {
 
