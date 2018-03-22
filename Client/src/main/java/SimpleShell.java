@@ -88,6 +88,12 @@ public class SimpleShell {
                 }
                 // you need to add a bunch more.
 
+                if (list.contains("dms")) {
+                    String results = webber.get_DMs(user);
+                    SimpleShell.prettyPrint(results);
+                    continue;
+                }
+
                 if (list.contains("send")) {
                     Message message;
                     String sentence = "";

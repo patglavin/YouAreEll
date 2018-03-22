@@ -31,6 +31,10 @@ public class YouAreEll {
         return null;
     }
 
+    public String get_DMs(User user){
+        return MakeURLCall("/ids/" + user.getGithub() + "/messages", "GET", "");
+    }
+
     public String get_messages(User user) {
         return MakeURLCall("/messages", "GET", "");
     }
