@@ -5,6 +5,8 @@ public class Message {
     private String toid;
     private String message;
 
+    public Message(){ }
+
     public Message(String fromid, String toid, String message) {
         this.sequence = "-";
         this.timestamp = "2018-03-21T01:00:00.0Z";

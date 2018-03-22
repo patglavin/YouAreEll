@@ -1,5 +1,5 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,17 +10,36 @@ import java.util.List;
 
 public class SimpleShell {
 
-    public static void prettyPrint(String output) {
-        // yep, make an effort to format things nicely, eh?
+    private static final Logger logger = LogManager.getLogger(SimpleShell.class);
+
+    public static void prettyPrintUsers(String output) {
         ObjectMapper mapper = new ObjectMapper();
-        Object json;
+        User[] users = null;
         try {
-            json = mapper.readValue(output, Object.class);
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
+            users = mapper.readValue(output, User[].class);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        for (User user:users){
+            System.out.println(user.getName() + " " + user.getGithub() + "\n---------------------------");
+        }
     }
+
+    public static void prettyPrintMessages(String output) {
+        ObjectMapper mapper = new ObjectMapper();
+        Message[] messages = null;
+        try {
+            messages = mapper.readValue(output, Message[].class);
+        } catch (IOException e) {
+            logger.trace("Pretty Print Message exception");
+            e.printStackTrace();
+        }
+        for (Message message:messages){
+            if (message.getToid().equals("")) System.out.println(message.getFromid() + ": " + message.getMessage());
+            else System.out.println(message.getFromid() + " says to " + message.getToid() + ": " + message.getMessage());
+        }
+    }
+
     public static void main(String[] args) throws java.io.IOException {
 
         YouAreEll webber = new YouAreEll();
@@ -76,21 +95,21 @@ public class SimpleShell {
                 // ids
                 if (list.contains("ids")) {
                     String results = webber.get_ids(user);
-                    SimpleShell.prettyPrint(results);
+                    SimpleShell.prettyPrintUsers(results);
                     continue;
                 }
 
                 // messages
                 if (list.contains("messages")) {
                     String results = webber.get_messages(user);
-                    SimpleShell.prettyPrint(results);
+                    SimpleShell.prettyPrintMessages(results);
                     continue;
                 }
                 // you need to add a bunch more.
 
                 if (list.contains("dms")) {
                     String results = webber.get_DMs(user);
-                    SimpleShell.prettyPrint(results);
+                    SimpleShell.prettyPrintMessages(results);
                     continue;
                 }
 
@@ -107,7 +126,7 @@ public class SimpleShell {
                         message = new Message(user.getGithub(), list.get(1), sentence);
                     }
                     String results = webber.send_message(message);
-                    SimpleShell.prettyPrint(results);
+                    SimpleShell.prettyPrintMessages(results);
                     continue;
                 }
 

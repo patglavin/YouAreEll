@@ -18,7 +18,6 @@ public class YouAreEll {
     public static void main(String[] args) {
         YouAreEll urlhandler = new YouAreEll();
         System.out.println(urlhandler.MakeURLCall("/ids", "GET", ""));
-        //System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
     }
 
     public String get_ids(User user) {
