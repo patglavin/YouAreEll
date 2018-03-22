@@ -21,7 +21,7 @@ public class SimpleShell {
             e.printStackTrace();
         }
         for (User user:users){
-            System.out.println(user.getName() + " " + user.getGithub() + "\n---------------------------");
+            System.out.println("Name: " + user.getName() + " Github: " + user.getGithub() + "\n-----------------------------------------");
         }
     }
 
@@ -35,8 +35,8 @@ public class SimpleShell {
             e.printStackTrace();
         }
         for (Message message:messages){
-            if (message.getToid().equals("")) System.out.println(message.getFromid() + ": " + message.getMessage());
-            else System.out.println(message.getFromid() + " says to " + message.getToid() + ": " + message.getMessage());
+            if (message.getToid().equals("")) System.out.println(message.getFromid() + ": " + message.getMessage() + "\n-----------------------------------------");
+            else System.out.println(message.getFromid() + " says to " + message.getToid() + ": " + message.getMessage() + "\n-----------------------------------------");
         }
     }
 
