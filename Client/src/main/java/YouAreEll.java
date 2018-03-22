@@ -1,4 +1,5 @@
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -22,20 +23,23 @@ public class YouAreEll {
         //System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
     }
 
-    public String get_ids() {
-        return MakeURLCall("/ids", "GET", "");
+    public String get_ids(User user) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return MakeURLCall("/ids", "GET", objectMapper.writeValueAsString(user));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public String get_messages() {
+    public String get_messages(User user) {
         return MakeURLCall("/messages", "GET", "");
     }
 
     public String MakeURLCall(String mainurl, String method, String jpayload) {
+        System.out.println(jpayload);
         String fullUrl = base + mainurl;
-        jpayload = "{\n" +
-                "\"name\":\"pat\",\n" +
-                "\"github\": \"patglavin\"\n" +
-                "}";
         Request request = new Request.Builder()
                 .url(fullUrl)
                 .build();
@@ -48,3 +52,8 @@ public class YouAreEll {
         return "nada";
     }
 }
+
+//jpayload = "{\n" +
+//        "\"name\":\"pat\",\n" +
+//        "\"github\": \"patglavin\"\n" +
+//        "}";

@@ -7,7 +7,6 @@ import java.util.List;
 
 public class SimpleShell {
 
-
     public static void prettyPrint(String output) {
         // yep, make an effort to format things nicely, eh?
         System.out.println(output);
@@ -22,6 +21,12 @@ public class SimpleShell {
         ProcessBuilder pb = new ProcessBuilder();
         List<String> history = new ArrayList<String>();
         int index = 0;
+        System.out.println("your name is? ");
+        String name = console.readLine();
+        System.out.println("your github id is? ");
+        String githubID = console.readLine();
+        User user = new User(name, githubID);
+        System.out.println(user.getName() + " " + user.getGithub());
         //we break out with <ctrl c>
         while (true) {
             //read what the user enters
@@ -60,14 +65,14 @@ public class SimpleShell {
 
                 // ids
                 if (list.contains("ids")) {
-                    String results = webber.get_ids();
+                    String results = webber.get_ids(user);
                     SimpleShell.prettyPrint(results);
                     continue;
                 }
 
                 // messages
                 if (list.contains("messages")) {
-                    String results = webber.get_messages();
+                    String results = webber.get_messages(user);
                     SimpleShell.prettyPrint(results);
                     continue;
                 }
