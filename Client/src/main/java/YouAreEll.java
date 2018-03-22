@@ -1,9 +1,7 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import com.squareup.okhttp.*;
+import sun.rmi.runtime.Log;
 
 import javax.swing.text.html.parser.Entity;
 import java.awt.*;
@@ -37,12 +35,22 @@ public class YouAreEll {
         return MakeURLCall("/messages", "GET", "");
     }
 
+    public String send_message(Message message) {
+        return MakeURLCall("/ids/" + message.getFromid() + "/" + message.getMessage(), "POST", "");
+    }
+
     public String MakeURLCall(String mainurl, String method, String jpayload) {
         System.out.println(jpayload);
         String fullUrl = base + mainurl;
-        Request request = new Request.Builder()
-                .url(fullUrl)
-                .build();
+        Request request;
+        if (method.equalsIgnoreCase("get")){
+            request = new Request.Builder()
+                    .url(fullUrl).get().build();
+        } else {
+            request = new Request.Builder()
+                    .url(fullUrl).method(method, RequestBody.create(json, jpayload))
+                    .build();
+        }
         try {
             Response response = okClient.newCall(request).execute();
             return response.body().string();

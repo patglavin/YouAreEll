@@ -88,6 +88,13 @@ public class SimpleShell {
                 }
                 // you need to add a bunch more.
 
+                if (list.contains("send")) {
+                    Message message = new Message(user.getName(), "", list.get(1));
+                    String results = webber.send_message(message);
+                    SimpleShell.prettyPrint(results);
+                    continue;
+                }
+
                 //!! command returns the last command in history
                 if (list.get(list.size() - 1).equals("!!")) {
                     pb.command(history.get(history.size() - 2));
