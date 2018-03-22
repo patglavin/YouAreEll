@@ -36,19 +36,26 @@ public class YouAreEll {
     }
 
     public String send_message(Message message) {
-        return MakeURLCall("/ids/" + message.getFromid() + "/" + message.getMessage(), "POST", "");
+        ObjectMapper mapper = new ObjectMapper();
+        String jpayload = null;
+        try {
+            jpayload = mapper.writeValueAsString(message);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return MakeURLCall("/ids/" + message.getFromid() + "/messages" , "POST", jpayload);
     }
 
     public String MakeURLCall(String mainurl, String method, String jpayload) {
         System.out.println(jpayload);
         String fullUrl = base + mainurl;
-        Request request;
+        Request request = null;
         if (method.equalsIgnoreCase("get")){
             request = new Request.Builder()
                     .url(fullUrl).get().build();
-        } else {
+        } else if (method.equalsIgnoreCase("post")){
             request = new Request.Builder()
-                    .url(fullUrl).method(method, RequestBody.create(json, jpayload))
+                    .url(fullUrl).post(RequestBody.create(json, jpayload))
                     .build();
         }
         try {

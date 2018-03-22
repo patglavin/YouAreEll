@@ -89,7 +89,17 @@ public class SimpleShell {
                 // you need to add a bunch more.
 
                 if (list.contains("send")) {
-                    Message message = new Message(user.getName(), "", list.get(1));
+                    Message message;
+                    String sentence = "";
+                    for (int i = 2; i < list.size(); i++) {
+                        sentence += list.get(i) + " ";
+                    }
+                    sentence = sentence.substring(0, sentence.length()-1);
+                    if (list.get(1).equalsIgnoreCase("group")){
+                        message = new Message(user.getGithub(), "", sentence);
+                    } else {
+                        message = new Message(user.getGithub(), list.get(1), sentence);
+                    }
                     String results = webber.send_message(message);
                     SimpleShell.prettyPrint(results);
                     continue;

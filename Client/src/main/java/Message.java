@@ -13,6 +13,14 @@ public class Message {
         this.message = message;
     }
 
+    public String getSequence() {
+        return sequence;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
     public String getFromid() {
         return fromid;
     }
