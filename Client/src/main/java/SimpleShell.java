@@ -68,6 +68,8 @@ public class SimpleShell {
         String githubID = console.readLine();
         User user = new User(name, githubID);
         System.out.println(user.getName() + " " + user.getGithub());
+        Thread scrapeThread = new Thread(new DMScraper(user, webber));
+        scrapeThread.start();
         //we break out with <ctrl c>
         while (true) {
             //read what the user enters
