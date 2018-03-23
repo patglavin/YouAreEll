@@ -137,7 +137,9 @@ public class SimpleShell {
                     } else {
                         message = new Message(user.getGithub(), list.get(1), sentence);
                     }
-                    String results = webber.send_message(message);
+                    String results;
+                    Thread thread = new Thread(results = webber.send_message(message));
+                    thread.run();
                     SimpleShell.prettyPrintMessage(results);
                     continue;
                 }
