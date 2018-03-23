@@ -120,8 +120,8 @@ public class SimpleShell {
                 // you need to add a bunch more.
 
                 if (list.contains("dms")) {
-                    String results = webber.get_DMs(user);
-                    SimpleShell.prettyPrintMessages(results);
+                    Thread thread = new Thread(new DMGetter(user, webber));
+                    thread.start();
                     continue;
                 }
 
