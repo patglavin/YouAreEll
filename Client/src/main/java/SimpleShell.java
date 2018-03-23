@@ -114,8 +114,8 @@ public class SimpleShell {
 
                 // messages
                 if (list.contains("messages")) {
-                    String results = webber.get_messages(user);
-                    SimpleShell.prettyPrintMessages(results);
+                    Thread thread = new Thread(new MessageLogger(user, webber));
+                    thread.start();
                     continue;
                 }
                 // you need to add a bunch more.
