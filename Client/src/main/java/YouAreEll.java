@@ -50,7 +50,7 @@ public class YouAreEll {
     }
 
     public String MakeURLCall(String mainurl, String method, String jpayload) {
-        System.out.println(jpayload);
+        //System.out.println(jpayload);
         String fullUrl = base + mainurl;
         Request request = null;
         if (method.equalsIgnoreCase("get")){
