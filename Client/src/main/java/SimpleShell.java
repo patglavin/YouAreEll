@@ -106,8 +106,7 @@ public class SimpleShell {
 
                 // ids
                 if (list.contains("ids")) {
-                    IDGetter idGetter = new IDGetter(user, webber);
-                    Thread thread = new Thread(idGetter);
+                    Thread thread = new Thread(new IDGetter(user, webber));
                     thread.start();
                     continue;
                 }
@@ -127,8 +126,7 @@ public class SimpleShell {
                 }
 
                 if (list.contains("send")) {
-                    MessageSender sender = new MessageSender(list, user, webber);
-                    Thread thread = new Thread(sender);
+                    Thread thread = new Thread(new MessageSender(list, user, webber));
                     thread.start();
                     continue;
                 }
