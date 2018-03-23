@@ -40,6 +40,18 @@ public class SimpleShell {
         }
     }
 
+    public static void prettyPrintMessage(String output) {
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = null;
+        try {
+            message = mapper.readValue(output, Message.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (message.getToid().equals("")) System.out.println(message.getFromid() + ": " + message.getMessage() + "\n-----------------------------------------");
+        else System.out.println(message.getFromid() + " says to " + message.getToid() + ": " + message.getMessage() + "\n-----------------------------------------");
+    }
+
     public static void main(String[] args) throws java.io.IOException {
 
         YouAreEll webber = new YouAreEll();
@@ -126,7 +138,7 @@ public class SimpleShell {
                         message = new Message(user.getGithub(), list.get(1), sentence);
                     }
                     String results = webber.send_message(message);
-                    SimpleShell.prettyPrintMessages(results);
+                    SimpleShell.prettyPrintMessage(results);
                     continue;
                 }
 
