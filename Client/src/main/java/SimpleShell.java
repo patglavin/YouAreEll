@@ -126,21 +126,9 @@ public class SimpleShell {
                 }
 
                 if (list.contains("send")) {
-                    Message message;
-                    String sentence = "";
-                    for (int i = 2; i < list.size(); i++) {
-                        sentence += list.get(i) + " ";
-                    }
-                    sentence = sentence.substring(0, sentence.length()-1);
-                    if (list.get(1).equalsIgnoreCase("group")){
-                        message = new Message(user.getGithub(), "", sentence);
-                    } else {
-                        message = new Message(user.getGithub(), list.get(1), sentence);
-                    }
-                    String results;
-                    Thread thread = new Thread(results = webber.send_message(message));
+                    MessageSender sender = new MessageSender(list, user, webber);
+                    Thread thread = new Thread(sender);
                     thread.run();
-                    SimpleShell.prettyPrintMessage(results);
                     continue;
                 }
 
