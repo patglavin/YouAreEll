@@ -106,8 +106,9 @@ public class SimpleShell {
 
                 // ids
                 if (list.contains("ids")) {
-                    String results = webber.get_ids(user);
-                    SimpleShell.prettyPrintUsers(results);
+                    IDGetter idGetter = new IDGetter(user, webber);
+                    Thread thread = new Thread(idGetter);
+                    thread.start();
                     continue;
                 }
 
