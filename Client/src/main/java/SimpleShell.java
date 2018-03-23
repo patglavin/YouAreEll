@@ -128,7 +128,7 @@ public class SimpleShell {
                 if (list.contains("send")) {
                     MessageSender sender = new MessageSender(list, user, webber);
                     Thread thread = new Thread(sender);
-                    thread.run();
+                    thread.start();
                     continue;
                 }
 

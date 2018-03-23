@@ -17,13 +17,14 @@ public class MessageSender implements Runnable{
         for (int i = 2; i < list.size(); i++) {
             sentence += list.get(i) + " ";
         }
+
         sentence = sentence.substring(0, sentence.length()-1);
         if (list.get(1).equalsIgnoreCase("group")){
             message = new Message(user.getGithub(), "", sentence);
         } else {
             message = new Message(user.getGithub(), list.get(1), sentence);
         }
-        
+
         String results = webber.send_message(message);
         try {
             Thread.sleep(10000);
